@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Item Tracking App</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/project_register.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<script src="{{ url_for('static', filename='js/project_register.js') }}" defer></script>
+</head>
+<body>
+	<header>
+		<h1>プロジェクト作成</h1>
+	</header>
+	<main>
+
+		<section id="project-add">
+			<form id="item-register-form" action="/project-register" method="post">
+				<div>
+					<label for="project-name">プロジェクト名：</label>
+					<input type="text" id="project-name" name="project-name" autocomplete="off" maxlength="64" required>
+				</div>
+				<button id="add-item-button">項目を追加</button>
+        <div id="form-container">
+					<div class="form-item">
+						<label for="item-name">項目名：</label>
+						<input type="text" id="item-name" name="item-name" autocomplete="off" maxlength="64" required>
+					</div>
+				</div>
+				<button type="submit">決定</button>
+			</form>
+		</section>
+
+		<button onclick="window.location.href='/'">ホーム</button>
+	</main>
+
+	<footer>
+		<p>&copy; 2024 App</p>
+	</footer>
+</body>
+</html>

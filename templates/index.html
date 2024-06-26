@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Item Tracking App</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<script src="{{ url_for('static', filename='toggle.js') }}" defer></script>
+</head>
+<body>
+	<header>
+		<h1>画像データ管理アプリ</h1>
+	</header>
+	<main>
+
+		<button onclick="window.location.href='/project-register'">プロジェクトを作成</button>
+		<section id="project-list">
+			<h2>プロジェクト一覧</h2>
+			{% if project_info %}
+			<ul>
+				{% for project in project_info %}
+					<li>
+						<strong>プロジェクト名：</strong>{{ project[1] }}<br>
+						<strong>作成日時：</strong>{{ project[2] }}<br>
+						<strong>最終更新日時：</strong>{{ project[3] }}
+						<button onclick="window.location.href='/project_detail/{{ project[0] }}'">詳細を表示</button>
+					</li>
+				{% endfor %}
+			</ul>
+			{% else %}
+				<p>まだプロジェクトが作成されていません。</p>
+			{% endif %}
+		</section>
+
+		<section id="app-description">
+			<p>
+				このアプリでは画像データを設定したパラメータによって管理することができます．
+			</p>
+		</section>
+	</main>
+
+	<footer>
+		<p>&copy; 2024 App</p>
+	</footer>
+</body>
+</html>

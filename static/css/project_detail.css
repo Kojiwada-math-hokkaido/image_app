@@ -1,0 +1,15 @@
+main {
+	margin-bottom: 100px;
+}
+
+#dropArea {
+	border: 2px dashed #ccc;
+	border-radius: 10px;
+	padding: 20px;
+	text-align: center;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+#dropArea.highlight {
+	border-color: #aaa;
+}

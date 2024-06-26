@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>プロジェクトの画像</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/project_image.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+</head>
+<body>
+	<header>
+		<h1>プロジェクトの画像</h1>
+	</header>
+	<main>
+		<section id="project-info">
+			<h2>プロジェクト情報</h2>
+			<li><strong>プロジェクト名:</strong> {{ project_info[1] }}</li>
+			<li><strong>作成日時:</strong> {{ project_info[2] }}</li>
+			<li><strong>最終更新日時:</strong> {{ project_info[3] }}</li>
+		</section>
+		<section>
+			<h2>画像データ検索</h2>
+			<form id="itemForm" action="/project_images/{{ project_info[0] }}" method="POST" enctype="multipart/form-data">
+				<ul>
+					{% for header in table_headers %}
+					<li>
+						<strong>{{ header }}</strong>：
+						<input type="text" name="{{ header }}" placeholder="{{ header }}を入力">
+					</li>
+					{% endfor %}
+				</ul>
+				<button type="submit">検索</button>
+			</form>
+		</section>
+
+		<section id="image-gallery">
+			<h2>全ての画像</h2>
+			<div class="image-grid">
+				{% for image in images %}
+					<div class="image-item">
+						<img src="{{ url_for('static', filename='../database/' + project_info[1] + '/' + image) }}" alt="{{ image }}">
+					</div>
+				{% endfor %}
+			</div>
+		</section>
+		<button onclick="window.location.href='/project_detail/{{ project_info[0] }}'">プロジェクト詳細に戻る</button>
+		<button onclick="window.location.href='/'">ホーム</button>
+	</main>
+	<footer>
+		<p>&copy; 2024 App</p>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>プロジェクトの詳細</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/project_detail.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<script src="{{ url_for('static', filename='js/image_configure.js') }}" defer></script>
+	<script src="{{ url_for('static', filename='js/drag_and_drop.js') }}" defer></script>
+</head>
+<body>
+	<header>
+		<h1>プロジェクトの詳細</h1>
+	</header>
+	<main>
+		<section id="project-info">
+			<h2>プロジェクト情報</h2>
+				<li><strong>プロジェクト名:</strong> {{ project_info[1] }}</li>
+				<li><strong>作成日時:</strong> {{ project_info[2] }}</li>
+				<li><strong>最終更新日時:</strong> {{ project_info[3] }}</li>
+		</section>
+		<section id="table-headers">
+			<h2>項目</h2>
+			<form id="itemForm" action="/project_detail/{{ project_info[0] }}" method="POST" enctype="multipart/form-data">
+				<ul>
+					{% for header in table_headers %}
+					<li>
+						<strong>{{ header }}</strong>：
+						<input type="text" name="{{ header }}" placeholder="{{ header }}を入力">
+					</li>
+					{% endfor %}
+					<li>
+						<strong>画像アップロード:</strong>
+						<div id="dropArea">
+							<p>ファイルをここにドラッグアンドドロップしてください</p>
+							<input type="file" id="imageInput" name="image" accept="image/*" onchange="previewImage(event)">
+						</div>
+						<img id="previewImage" src="#" alt="Uploaded Image" style="max-width: 100%; max-height: 300px;" hidden>
+					</li>
+				</ul>
+				<button type="submit" id="saveButton">保存する</button>
+			</form>
+		</section>
+
+		<button onclick="window.location.href='/project_images/{{ project_info[0] }}'">画像一覧を見る</button>
+		<button onclick="window.location.href='/'">ホーム</button>
+	</main>
+	<footer>
+			<p>&copy; 2024 App</p>
+	</footer>
+</body>
+</html>
