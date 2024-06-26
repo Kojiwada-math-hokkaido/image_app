@@ -92,7 +92,7 @@ def project_register():
 	return render_template('project_register.html')
 
 #################################
-# プロジェクト情報を取得する関数
+# プロジェクトに画像データを取得する関数
 def get_project_detail(id):
 	db_path = 'database/project_info.db'
 	conn = sqlite3.connect(db_path)
@@ -112,12 +112,21 @@ def get_table_headers(project_name):
 	conn.close()
 	return [header[1] for header in headers if header[1] != 'id']
 
+def update_last_modified_time(data_id):
+	conn = sqlite3.connect('database/project_info.db')
+	cursor = conn.cursor()
+	current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+	cursor.execute("UPDATE project_info SET updated_at=? WHERE id=?", (current_time, data_id))
+	conn.commit()
+	conn.close()
+
 # 画像を保存する関数
 def save_image(image_file, project_folder, data_id):
-	filename = secure_filename(image_file.filename)
 	image_filename = f"{data_id}.png"
 	image_path = os.path.join(project_folder, image_filename)
 	image_file.save(image_path)
+
+	update_last_modified_time(data_id)
 
 # テーブルにテキストデータを保存する関数
 def save_text_data(project_name, text_data):
@@ -174,7 +183,7 @@ def project_detail(project_id):
 	table_headers = get_table_headers(project_info[1])  # プロジェクト名を使ってヘッダーを取得
 	return render_template('project_detail.html', project_info=project_info, table_headers=table_headers)
 
-############################
+######################################
 # プロジェクトで保存した画像を表示
 @app.route('/project_images/<project_id>', methods=['GET', 'POST'])
 def project_images(project_id):
